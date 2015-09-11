@@ -1,0 +1,37 @@
+{
+  "name": "bajadecorazon",
+  "version": "0.0.0",
+  "authors": [
+    "DroidCode20 <droidcode20@gmail.com>"
+  ],
+  "description": "bootstrap ui app",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "lodash": "~3.10.0",
+    "backbone": "~1.2.1",
+    "backbone.radio": "~1.0.0",
+    "requirejs": "~2.1.19",
+    "requirejs-text": "~2.0.14",
+    "modernizr": "~2.8.3",
+    "handlebars": "~3.0.3",
+    "fontawesome": "~4.3.0",
+    "materialize": "~0.97.0",
+    "require-cs": "~0.5.0",
+    "marionette": "~2.4.2",
+    "backbone.syphon": "~0.6.2",
+    "require-handlebars-plugin": "~0.11.3",
+    "jade": "~1.11.0"
+  }
+}
