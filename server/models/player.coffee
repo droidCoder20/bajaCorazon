@@ -2,16 +2,18 @@ mongoose = require 'mongoose'
 Schema   = mongoose.Schema
 
 PlayerSchema = new Schema({
-    name: 
+    name:
         type: String,
         required: true
-    lastname: 
+    lastname:
         type: String,
         required: true
     born_date:
         type: Date,
         default: Date.now
     responsable_id:
-        type: Number
-        required: true            
-    })
+        type: String
+        required: true
+})
+
+module.exports = mongoose.model('Player', PlayerSchema)

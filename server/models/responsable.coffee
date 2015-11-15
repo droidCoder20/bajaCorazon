@@ -2,21 +2,23 @@ mongoose = require 'mongoose'
 Schema   = mongoose.Schema
 
 ResponsableSchema = new Schema({
-    name: 
+    name:
         type: String,
         required: true
-    lastname: 
+    lastname:
         type: String,
         required: true
-    address: 
+    address:
         type: String
         required: true
-    email: 
+    email:
         type: String,
         required: true
     phone:
         type: String,
     cellphone:
         type: String,
-        required: true         
-    })
+        required: true
+})
+
+module.exports = mongoose.model('Responsable', ResponsableSchema)

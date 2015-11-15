@@ -2,21 +2,21 @@ mongoose = require 'mongoose'
 Schema   = mongoose.Schema
 
 UserSchema = new Schema({
-    name: 
+    name:
         type: String,
         required: true
-    lastname: 
+    lastname:
         type: String,
         required: true
     username:
         type: String,
         required: true
-    email: 
+    email:
         type: String,
         required: true
-    password: 
+    password:
         type: String,
         required: true
-    })
+})
 
-return UserSchema 
+module.exports = mongoose.model('User', UserSchema)
