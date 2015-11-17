@@ -1,6 +1,6 @@
 /.idea
 /node_modules
 /public
-/server.js
-/src/bower_components
+/server/
+/src/ui/bower_components
 npm-debug.log

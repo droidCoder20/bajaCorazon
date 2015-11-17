@@ -4,23 +4,11 @@ gruntFunction = (grunt) ->
     pkg:
       grunt.file.readJSON('package.json')
 
-    # Imagemin #################################
-    imagemin:
-        static:
-            options:
-                optimizationLevel: 3
-        dynamic:
-            files: [
-                expand: true
-                cwd: 'resources/assets/img'
-                src: ['**/*.{png,jpg,gif}']
-                dest: 'public/img'    
-            ]
     # BrowserSync ###############################
     browserSync:
       dist:
           bsFiles:
-            src : ['public/**/*', 'resources/server/views/**/*']
+            src : ['public/**/*', 'server/views/**/*']
           options:
             watchTask: true
             proxy: 'localhost:3333'
@@ -35,17 +23,29 @@ gruntFunction = (grunt) ->
 
     # CLEAN #####################################
     clean:
-      hbs: ["resources/coffee/**/*.hbs"]
+      hbs: ["src/ui/app/modules/**/*.hbs"]
 
     # COFFESCRIPT ###############################
     coffee:
-      glob_to_multiple:
-        expand: true
-        cwd: 'resources/coffee'
-        src: '**/*.coffee'
-        dest: 'public/js'
-        ext: '.js'
-
+        ui:
+            expand: true
+            cwd: 'src/ui/app'
+            src: '**/*.coffee'
+            dest: 'public/app'
+            ext: '.js'
+                
+        server:
+            expand: true
+            cwd: 'src/server'
+            src: '**/*.coffee'
+            dest: 'server/'
+            ext: '.js'        
+    # EXPRESS ###################################
+    express:
+        dev:
+            options:
+                script: 'server/server.js'
+    
     # HANDLEBARS ################################
     handlebars:
       compile:
@@ -54,12 +54,25 @@ gruntFunction = (grunt) ->
           amd: true
         files:[
           expand: true
-          cwd: "resources/coffee/"
+          cwd: "src/ui/app/"
           src: "**/*.hbs"
-          dest: "public/js"
+          dest: "public/app"
           ext: ".js"
         ]
-
+    
+    # Imagemin #################################
+    imagemin:
+        static:
+            options:
+                optimizationLevel: 3
+        dynamic:
+            files: [
+                expand: true
+                cwd: 'src/ui/app/img'
+                src: ['**/*.{png,jpg,gif}']
+                dest: 'public/img'    
+            ]
+            
     # JADE #####################################
     jade:
       views:
@@ -69,7 +82,7 @@ gruntFunction = (grunt) ->
             debug: false
         files:[
           expand: true
-          cwd: "resources/server/views"
+          cwd: "src/server/views"
           src: ["**/*.jade"]
           dest: "server/views"
         ]
@@ -80,9 +93,9 @@ gruntFunction = (grunt) ->
             debug: false
         files: [
           expand: true
-          cwd: "resources/coffee"
+          cwd: "src/ui/app"
           src: "**/*.jade"
-          dest: "resources/coffee"
+          dest: "src/ui/app"
           ext: ".hbs"
         ]
 
@@ -91,38 +104,33 @@ gruntFunction = (grunt) ->
       compile:
         files:[
           expand: true
-          cwd: "resources/assets/stylus"
+          cwd: "src/ui/app/styl"
           src: "**/*.styl"
           dest: "public/css"
           ext: ".css"
         ]
-          
+        
     # WATCH ####################################
     watch:
+      options:
+          livereload: true
       stylus:
-        files: ['resources/assets/stylus/**/*.styl']
+        files: ['src/ui/app/styl/**/*.styl']
         tasks: ['stylus']
       views:
-        files: ['resources/server/views/**/*.jade']
+        files: ['src/server/views/**/*.jade']
         tasks: ['jade:views']
       templates:
-        files: ['resources/coffee/**/*.jade']
+        files: ['src/ui/app/**/*.jade']
         tasks: ['jade:templates', 'handlebars', 'clean']
       coffee:
-        files: ['resources/coffee/**/*.coffee']
-        tasks: ['coffee']
-      servercoffee:
-          files: ['resources/server/**/*.coffee']
-          tasks: ['server']        
-
-    # SERVER ##################################
-    servercoffee:
-        glob_to_multiple:
-          expand: true
-          cwd: 'resources/server'
-          src: '**/*.coffee'
-          dest: 'server/'
-          ext: '.js'
+        files: ['src/ui/app/**/*.coffee', 'src/server/**/*.coffee']
+        tasks: ['coffee']        
+      express:
+         files: ['server/**/*.js', 'public/app**/*.js']
+         tasks: ['express:dev']
+         options:
+             spawn: false 
 
   # LOAD NPM TASKS #############################
   grunt.loadNpmTasks 'grunt-contrib-imagemin'
@@ -134,6 +142,7 @@ gruntFunction = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-browser-sync'
+  grunt.loadNpmTasks 'grunt-express-server'
 
   # LAST SETTINGS ##############################
   grunt.registerTask 'default', [
@@ -142,9 +151,10 @@ gruntFunction = (grunt) ->
     'jade'
     'handlebars'
     'clean'
-    'browserSync:dist'
-    'watch'
     'imagemin'
+    'express:dev'
+    'watch'
+    #'browserSync:dist'
   ]
   
   grunt.initConfig gruntConfig

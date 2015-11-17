@@ -9,7 +9,8 @@ app         = express()
 port = process.env.PORT || 8080
 
 ## DB STUFF
-mongoose.connect 'mongodb://admin:root123@ds039431.mongolab.com:39431/bajacorazondb'
+mongoose.connect 'mongodb://localhost/bajacorazondb'
+#mongoose.connect 'mongodb://admin:root123@ds039431.mongolab.com:39431/bajacorazondb'
 
 ## USE
 app.use bodyParser.urlencoded({ extended: true })
@@ -20,11 +21,12 @@ app.use('/api', router)
 router.use (req,res,next) ->
     console.log "Something is happening"
     next()
-require('./server/router/main')(router)
-require('./server/router/attendance')(router)
-require('./server/router/player')(router)
-require('./server/router/responsable')(router)
-require('./server/router/user')(router)
+    
+require('./router/main')(router)
+require('./router/attendance')(router)
+require('./router/player')(router)
+require('./router/responsable')(router)
+require('./router/user')(router)
 
 
 app.listen(port)
