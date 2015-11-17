@@ -1,10 +1,6 @@
 /.idea
 /node_modules
-npm-debug.log
-public/js/vendor
-public/css
-public/js
-public/img
-resources/views
-resources/templates
+/public
 /server.js
+/src/bower_components
+npm-debug.log

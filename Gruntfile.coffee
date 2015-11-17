@@ -136,7 +136,6 @@ gruntFunction = (grunt) ->
   grunt.loadNpmTasks 'grunt-browser-sync'
 
   # LAST SETTINGS ##############################
-  grunt.registerTask 'lol', [servercoffee]
   grunt.registerTask 'default', [
     'stylus'
     'coffee'
